@@ -2,12 +2,12 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy.orm import Session
 from db.database import get_db
 from db import models
-from schemas.models import Resume
+from routers.schemas.models import Resume
 from fastapi import Depends
 
 router = APIRouter()
 
-@router.post("/upload_resume/")
+@router.post("/")
 async def upload_resume(resume: Resume, db: Session = Depends(get_db)):
     try:
         # Create new user entry

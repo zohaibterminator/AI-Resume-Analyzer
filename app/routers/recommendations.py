@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 import google.generativeai as genai
 from sqlalchemy.orm import Session
-from schemas.models import Resume
+from routers.schemas.models import Resume
 from db.database import get_db
 from db import models
 import os
