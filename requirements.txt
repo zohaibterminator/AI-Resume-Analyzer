@@ -2,6 +2,7 @@ nltk
 spacy
 fastapi
 uvicorn
-pymysql
 python-dotenv
 google-generativeai
+alembi
+sqlalchemy
