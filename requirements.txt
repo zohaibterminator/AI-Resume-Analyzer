@@ -1,5 +1,5 @@
 nltk
-spacy
+spacy==2.3.5
 fastapi
 uvicorn
 python-dotenv
