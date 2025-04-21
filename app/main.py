@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from db.database import engine, Base
-from routers import resume, recommendations
+from routers import add_user, recommendations
 import uvicorn
 
 Base.metadata.create_all(bind=engine)
@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 
-app.include_router(resume.router, prefix="/resume", tags=["Resume"])
+app.include_router(add_user.router, prefix="/add_user", tags=["Add User"])
 app.include_router(recommendations.router, prefix="/recommend", tags=["Recommendations"])
 
 

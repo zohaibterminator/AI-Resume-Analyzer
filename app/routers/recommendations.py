@@ -51,8 +51,10 @@ async def recommendations(resume: Resume, user_id: int, db: Session = Depends(ge
         resume = models.Resume(
             resume_score=resume.resume_score,
             no_of_pages=resume.no_of_pages,
+            timestamp=resume.timestamp,
             recommendations=response.text,
             user_level=resume.user_level,
+            skills=resume.skills,
             total_experience=resume.total_experience,
             job_description=resume.job_description,
         )

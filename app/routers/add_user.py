@@ -1,10 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
-import google.generativeai as genai
 from sqlalchemy.orm import Session
 from routers.schemas.models import User
 from db.database import get_db
 from db import models
-from dotenv import load_dotenv
 
 
 router = APIRouter()
@@ -14,8 +12,8 @@ async def generate_recommendations(user: User, user_id: int, db: Session = Depen
     try:
         user = models.User(
             name=user.name,
-            email=user.email,
-            resume_score=user.mobile_num,
+            email_id=user.email_id,
+            mobile_num=user.mobile_num,
         )
         db.add(user)
         db.commit()

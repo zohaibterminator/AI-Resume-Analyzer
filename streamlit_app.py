@@ -5,10 +5,11 @@ import tempfile
 from datetime import datetime
 import nltk
 nltk.download('stopwords')
-from pyresparser import ResumeParser
+import pyresparser
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import warnings
+import spacy
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
@@ -34,7 +35,9 @@ def calculate_resume_score(resume_text, jd_text):
 
 
 def extract_resume_info(file_path, jd_text):
-    data = ResumeParser(file_path).get_extracted_data()
+    pyresparser.resume_parser.custom_nlp = spacy.load("en_core_web_sm")
+
+    data = pyresparser.ResumeParser(file_path).get_extracted_data()
     resume_text = " ".join([
         str(data.get("name", "")),
         str(data.get("email", "")),
@@ -84,7 +87,7 @@ if uploaded_file is not None and jd_text.strip():
             upload_user = requests.post(f"{BACKEND_URL}/add_user/", json=data[0])
             upload_user.raise_for_status()
 
-            upload_response = requests.post(f"{BACKEND_URL}/upload_resume/", json=data[1])
+            upload_response = requests.post(f"{BACKEND_URL}/recommend", json=data[1])
             upload_response.raise_for_status()
 
             user_id = upload_response.json().get("user_id")

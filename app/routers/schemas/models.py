@@ -5,14 +5,14 @@ from datetime import datetime
 
 class User(BaseModel):
     name: str
-    email: EmailStr
+    email_id: EmailStr
     mobile_num: str
 
 
 class Resume(BaseModel):
     resume_score: float
-    timestamp: datetime
     no_of_pages: int
+    timestamp: datetime
     user_level: str
     skills: List
     total_experience: float
