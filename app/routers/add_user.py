@@ -8,20 +8,21 @@ from db import models
 router = APIRouter()
 
 @router.post("/")
-async def generate_recommendations(user: User, user_id: int, db: Session = Depends(get_db)):
+async def add_user(user: User, db: Session = Depends(get_db)):
+    print
     try:
-        user = models.User(
+        new_user = models.User(
             name=user.name,
             email_id=user.email_id,
             mobile_num=user.mobile_num,
         )
-        db.add(user)
+        db.add(new_user)
         db.commit()
-        db.refresh(user)
+        db.refresh(new_user)
 
         return {
             "message": "user added successfully",
-            "user_id": user.id
+            "user_id": new_user.id
         }
 
     except Exception as e:

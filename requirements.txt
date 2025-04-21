@@ -12,3 +12,4 @@ psycopg2
 pydantic[email]
 streamlit
 scikit-learn
+numpy==1.26.4

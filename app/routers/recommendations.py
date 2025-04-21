@@ -7,11 +7,11 @@ from db import models
 import os
 from dotenv import load_dotenv
 
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_gemini_client():
     return genai.GenerativeModel(
-        model_name="gemini-2.0-pro",
-        api_key=os.getenv("GOOGLE_API_KEY")
+        model_name="gemini-1.5-pro",
     )
 
 
@@ -43,12 +43,12 @@ async def recommendations(resume: Resume, user_id: int, db: Session = Depends(ge
         {resume_text}
         """
 
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
+        response = client.generate_content(
+            prompt
         )
 
         resume = models.Resume(
+            user_id=user_id,
             resume_score=resume.resume_score,
             no_of_pages=resume.no_of_pages,
             timestamp=resume.timestamp,
@@ -65,4 +65,5 @@ async def recommendations(resume: Resume, user_id: int, db: Session = Depends(ge
 
     except Exception as e:
         db.rollback()
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))

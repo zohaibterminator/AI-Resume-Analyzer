@@ -28,6 +28,6 @@ class Resume(Base):
     user_level = Column(String(255), nullable=False)
     total_experience = Column(Float, nullable=False)
     skills = Column(String(200), nullable=False)
-    job_description = Column(String(200), nullable=False)
+    job_description = Column(Text, nullable=False)
 
     user = relationship("User", back_populates="user_resume")

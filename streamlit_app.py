@@ -52,7 +52,7 @@ def extract_resume_info(file_path, jd_text):
     return (
         {
             "name": data.get("name", "N/A"),
-            "email": data.get("email", "N/A"),
+            "email_id": data.get("email", "N/A"),
             "mobile_num": data.get("mobile_number"),
         },
         {
@@ -72,7 +72,7 @@ uploaded_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
 jd_text = st.text_area("Paste the Job Description (JD) below:")
 
 if uploaded_file is not None and jd_text.strip():
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
         tmp_file.write(uploaded_file.read())
         tmp_path = tmp_file.name
 
@@ -83,19 +83,19 @@ if uploaded_file is not None and jd_text.strip():
     with st.spinner("Analyzing resume..."):
         data = extract_resume_info(tmp_path, jd_text)
 
+        print(data[0])
+
         try:
             upload_user = requests.post(f"{BACKEND_URL}/add_user/", json=data[0])
             upload_user.raise_for_status()
 
-            upload_response = requests.post(f"{BACKEND_URL}/recommend", json=data[1])
+            upload_response = requests.post(f"{BACKEND_URL}/recommend", json=data[1], params={"user_id": upload_user.json().get("user_id")})
             upload_response.raise_for_status()
-
-            user_id = upload_response.json().get("user_id")
 
             recs = upload_response.json().get("recommendations")
 
             st.success("✅ Resume analyzed successfully!")
-            st.markdown(f"### 📊 Resume Score: `{data['resume_score']} / 100`")
+            st.markdown(f"### 📊 Resume Score: `{data[1]['resume_score']} / 100`")
             st.markdown(f"### 💡 Recommendations:\n{recs}")
         except Exception as e:
             st.error(f"❌ Error occurred: {e}")
