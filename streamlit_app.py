@@ -27,13 +27,6 @@ def show_pdf(file_path):
     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
-def calculate_resume_score(resume_text, jd_text):
-    vectorizer = TfidfVectorizer()
-    vectors = vectorizer.fit_transform([resume_text, jd_text])
-    similarity = cosine_similarity(vectors[0:1], vectors[1:2])[0][0]
-    return round(similarity * 100, 2)  # Score out of 100
-
-
 def extract_resume_info(file_path, jd_text):
     pyresparser.resume_parser.custom_nlp = spacy.load("en_core_web_sm")
 
@@ -47,7 +40,6 @@ def extract_resume_info(file_path, jd_text):
         str(data.get("designation", "")),
         str(data.get("company_names", ""))
     ])
-    resume_score = calculate_resume_score(resume_text, jd_text)
 
     return (
         {
@@ -56,7 +48,7 @@ def extract_resume_info(file_path, jd_text):
             "mobile_num": data.get("mobile_number"),
         },
         {
-            "resume_score": resume_score,
+            "resume_score": 0,
             "timestamp": datetime.utcnow().timestamp(),
             "no_of_pages": data.get("no_of_pages", 1),
             "user_level": "Fresher" if data.get("no_of_pages", 1) == 1 else "Intermediate",
@@ -88,6 +80,11 @@ if uploaded_file is not None and jd_text.strip():
         try:
             upload_user = requests.post(f"{BACKEND_URL}/add_user/", json=data[0])
             upload_user.raise_for_status()
+
+            resume_score = requests.post(f"{BACKEND_URL}/calculate_score/",json=data[1] ,params={"user_id": upload_user.json().get("user_id")})
+            resume_score.raise_for_status()
+
+            data[1]["resume_score"] = float(resume_score.json().get("resume_score", 0))
 
             upload_response = requests.post(f"{BACKEND_URL}/recommend", json=data[1], params={"user_id": upload_user.json().get("user_id")})
             upload_response.raise_for_status()

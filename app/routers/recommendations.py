@@ -1,18 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
-import google.generativeai as genai
 from sqlalchemy.orm import Session
 from routers.schemas.models import Resume
 from db.database import get_db
 from db import models
-import os
-from dotenv import load_dotenv
-
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-def get_gemini_client():
-    return genai.GenerativeModel(
-        model_name="gemini-1.5-pro",
-    )
+from db.utils import get_gemini_client
 
 
 router = APIRouter()
