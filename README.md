@@ -11,7 +11,7 @@ An AI-powered resume parsing and evaluation tool built with **Streamlit**, **Fas
 - ⚙️ Custom skill and experience extraction
 - 📝 Compare resumes with job descriptions
 - 📊 Generate resume scores and recommendations
-- 💾 Stores parsed data in a MySQL (Supabase) database
+- 💾 Stores parsed resume, recomendations and user data in a Supabase database
 
 ---
 
@@ -20,7 +20,7 @@ An AI-powered resume parsing and evaluation tool built with **Streamlit**, **Fas
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/ai-resume-analyzer.git
+git clone [https://github.com/yo/ai-resume-analyzer.git](https://github.com/zohaibterminator/AI-Resume-Analyzer.git)
 cd ai-resume-analyzer
 ```
 
