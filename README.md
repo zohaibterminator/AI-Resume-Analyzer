@@ -20,8 +20,7 @@ An AI-powered resume parsing and evaluation tool built with **Streamlit**, **Fas
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/yo/ai-resume-analyzer.git](https://github.com/zohaibterminator/AI-Resume-Analyzer.git)
-cd ai-resume-analyzer
+git clone https://github.com/zohaibterminator/AI-Resume-Analyzer.git
 ```
 
 ### 2. Install Dependencies
