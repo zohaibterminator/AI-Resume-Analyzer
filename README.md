@@ -45,6 +45,8 @@ uvicorn app.main:app --host 0.0.0.0 --reload
 streamlit run streamlit_app.py
 ```
 
+---
+
 ## 🧪 Technologies Used
 - Frontend: Streamlit
 - Backend: FastAPI
@@ -52,7 +54,9 @@ streamlit run streamlit_app.py
 - Resume Parsing: pyresparser + spaCy + custom logic
 - Resume Scoring: Score generation using LLM
 
+---
+
 ## Contact
 Made by Zohaib Saqib
-Email: zohaibsaqib803@gmail.com
-LinkedIn: www.linkedin.com/in/muhammadzohaibsaqib
+- Email: zohaibsaqib803@gmail.com
+- LinkedIn: www.linkedin.com/in/muhammadzohaibsaqib
